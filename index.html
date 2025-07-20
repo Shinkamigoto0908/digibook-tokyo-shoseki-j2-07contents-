@@ -1,140 +1,164 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NEW HORIZON English Course3</title>
-<style>
-  html, body {
-    margin:0; padding:0; height:100vh; overflow:hidden;
-    font-family: sans-serif;
-    background: #fff;
-  }
-  .sideButtons.left, .sideButtons.right {
-    position: fixed;
-    top: 0; height: 100vh;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width: 50px;
-    padding: 10px 0;
-    background: #f0f0f0;
-    box-sizing: border-box;
-    z-index: 1000;
-    align-items: center;
-  }
-  .sideButtons.left {
-    left: 0;
-    border-right: 1px solid #ccc;
-  }
-  .sideButtons.right {
-    right: 0;
-    border-left: 1px solid #ccc;
-  }
-  button {
-    width: 45px;
-    height: 45px;
-    border: 1px solid #ccc;
-    background: white;
-    cursor: pointer;
-    font-size: 11px;
-    color: #333;
-    border-radius: 6px;
-    user-select: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 4px;
-    box-shadow: none;
-  }
-  button:hover, button:focus {
-    background-color: white;
-    outline: none;
-    box-shadow: none;
-  }
-  #content {
-    position: fixed;
-    top: 0; bottom: 0;
-    left: 50px; right: 50px;
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-  }
-  #content.iframe-visible {
-    overflow: auto;
-  }
-  #pageImage, #pageIframe {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    border: 1px solid #ccc;
-    position: relative;
-    z-index: 1;
-  }
-  #pageIframe {
-    display: none;
-    border: none;
-    width: 100%;
-    height: 100%;
-  }
-  #tocContainer {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    width: 250px;
-    background: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 3px 0 8px rgba(0,0,0,0.2);
-    z-index: 1500;
-    user-select: none;
-    display: none;
-    flex-direction: column;
-  }
-  #tocCanvas {
-    width: 250px;
-    height: 40px;
-    display: block;
-    cursor: pointer;
-    user-select: none;
-  }
-  #tocButtons {
-    flex: 1;
-    overflow-y: auto;
-    padding: 4px 0;
-  }
-  #tocButtons button {
-    width: 100%;
-    padding: 8px 12px;
-    border: none;
-    background: white;
-    cursor: pointer;
-    text-align: left;
-    font-size: 14px;
-    color: #000;
-    border-bottom: 1px solid #eee;
-  }
-  #tocButtons button:hover {
-    background-color: #cce5ff;
-  }
-  #iframeCloseBtn {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: #ddd;
-    border: none;
-    border-radius: 4px;
-    padding: 2px 6px;
-    font-size: 14px;
-    cursor: pointer;
-    display: none;
-    z-index: 2000;
-  }
-  #iframeCloseBtn:hover {
-    background: #bbb;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NEW HORIZON English Course3</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <style>
+    html, body {
+      margin:0; padding:0; height:100vh; overflow:hidden;
+      font-family: sans-serif;
+      background: #fff;
+    }
+    .sideButtons.left, .sideButtons.right {
+      position: fixed;
+      top: 0; height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 50px;
+      padding: 10px 0;
+      background: #f0f0f0;
+      box-sizing: border-box;
+      z-index: 1000;
+      align-items: center;
+    }
+    .sideButtons.left {
+      left: 0;
+      border-right: 1px solid #ccc;
+    }
+    .sideButtons.right {
+      right: 0;
+      border-left: 1px solid #ccc;
+    }
+    .flyoutButtons {
+      position: absolute;
+      top: 140px;
+      display: none;
+      flex-direction: row;
+      background: #f9f9f9;
+      border: 1px solid #ccc;
+      padding: 4px;
+      gap: 4px;
+      z-index: 1100;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .sideButtons.left .flyoutButtons {
+      left: 50px;
+    }
+    .sideButtons.right .flyoutButtons {
+      right: 50px;
+    }
+    button {
+      width: 45px;
+      height: 45px;
+      border: 1px solid #ccc;
+      background: white;
+      cursor: pointer;
+      font-size: 11px;
+      color: #333;
+      border-radius: 6px;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 4px;
+      box-shadow: none;
+      transition: background-color 0.2s;
+    }
+    button:hover, button:focus {
+      background-color: #e6f0ff;
+      outline: none;
+      box-shadow: none;
+    }
+    #content {
+      position: fixed;
+      top: 0; bottom: 0;
+      left: 50px; right: 50px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    #content.iframe-visible {
+      overflow: auto;
+    }
+    #pageImage {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border: 1px solid #ccc;
+      position: relative;
+      z-index: 1;
+      cursor: grab;
+      transition: transform 0.1s ease-out;
+      user-select: none;
+    }
+    #pageIframe {
+      display: none;
+      border: none;
+      width: 100%;
+      height: 100%;
+    }
+    #tocContainer {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 250px;
+      background: #fff;
+      border: 1px solid #ccc;
+      box-shadow: 3px 0 8px rgba(0,0,0,0.2);
+      z-index: 1500;
+      user-select: none;
+      display: none;
+      flex-direction: column;
+    }
+    #tocCanvas {
+      width: 250px;
+      height: 40px;
+      display: block;
+      cursor: pointer;
+    }
+    #tocButtons {
+      flex: 1;
+      overflow-y: auto;
+      padding: 4px 0;
+    }
+    #tocButtons button {
+      width: 100%;
+      padding: 8px 12px;
+      border: none;
+      background: white;
+      cursor: pointer;
+      text-align: left;
+      font-size: 14px;
+      color: #000;
+      border-bottom: 1px solid #eee;
+    }
+    #tocButtons button:hover {
+      background-color: #cce5ff;
+    }
+    #iframeCloseBtn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: #ddd;
+      border: none;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 14px;
+      cursor: pointer;
+      display: none;
+      z-index: 2000;
+    }
+    #iframeCloseBtn:hover {
+      background: #bbb;
+    }
+  </style>
 </head>
 <body>
 
@@ -142,17 +166,31 @@
   <button id="tocBtnLeft">目次</button>
   <button id="prevBtnLeft">前へ</button>
   <button id="nextBtnLeft">次へ</button>
+  <button id="moreLeft">表示</button>
+  <div class="flyoutButtons" id="flyoutLeft">
+    <button id="zoomInBtn">＋</button>
+    <button id="zoomOutBtn">－</button>
+    <button id="zoomResetBtn">100%</button>
+    <button id="clickToggleBtn">クリック</button>
+  </div>
 </div>
 
 <div class="sideButtons right">
   <button id="tocBtnRight">目次</button>
   <button id="prevBtnRight">前へ</button>
   <button id="nextBtnRight">次へ</button>
+  <button id="moreRight">表示</button>
+  <div class="flyoutButtons" id="flyoutRight">
+    <button id="zoomInBtn2">＋</button>
+    <button id="zoomOutBtn2">－</button>
+    <button id="zoomResetBtn2">100%</button>
+    <button id="clickToggleBtn2">クリック</button>
+  </div>
 </div>
 
 <div id="content">
   <img id="pageImage" src="pages/1.png" alt="ページ画像" />
-  <iframe id="pageIframe" src="" allowfullscreen></iframe>
+  <iframe id="pageIframe"></iframe>
   <button id="iframeCloseBtn">✕</button>
 </div>
 
@@ -167,12 +205,16 @@
   let tocVisible = false;
   let tocPosition = 'left';
   let tocMode = 'page';
+  let currentZoom = 1.0;
+  let offsetX = 0, offsetY = 0;
+  let isDragging = false;
+  let startX = 0, startY = 0;
+  let clickHighlight = false;
 
   const pageImage = document.getElementById('pageImage');
   const pageIframe = document.getElementById('pageIframe');
   const iframeCloseBtn = document.getElementById('iframeCloseBtn');
   const contentDiv = document.getElementById('content');
-
   const tocContainer = document.getElementById('tocContainer');
   const tocCanvas = document.getElementById('tocCanvas');
   const tocButtons = document.getElementById('tocButtons');
@@ -201,7 +243,8 @@
     closeIframe();
     currentPage = Math.max(1, Math.min(p, totalPages));
     pageImage.src = `pages/${currentPage}.png`;
-    if (tocVisible) renderTocList();
+    offsetX = 0; offsetY = 0; currentZoom = 1;
+    applyZoom();
   }
 
   function openIframe(url) {
@@ -220,6 +263,34 @@
     contentDiv.classList.remove('iframe-visible');
   }
 
+  function applyZoom() {
+    pageImage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${currentZoom})`;
+  }
+
+  function zoomIn() {
+    currentZoom += 0.2;
+    applyZoom();
+  }
+
+  function zoomOut() {
+    currentZoom = Math.max(0.2, currentZoom - 0.2);
+    if (currentZoom <= 1) { offsetX = 0; offsetY = 0; }
+    applyZoom();
+  }
+
+  function zoomReset() {
+    currentZoom = 1.0;
+    offsetX = 0; offsetY = 0;
+    applyZoom();
+  }
+
+  function toggleClickHighlight() {
+    clickHighlight = !clickHighlight;
+    const url = new URL(window.location);
+    url.searchParams.set('click-area', clickHighlight);
+    window.history.replaceState({}, '', url);
+  }
+
   const tabs = ['ページ', 'コンテンツ', '動画'];
   function drawTabs() {
     ctx.clearRect(0, 0, tocCanvas.width, tocCanvas.height);
@@ -227,11 +298,9 @@
     ctx.font = 'bold 16px sans-serif';
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'left';
-
     tabs.forEach((label, i) => {
       ctx.fillStyle = (tocMode === ['page','content','video'][i]) ? '#bbb' : '#eee';
       ctx.strokeStyle = '#999';
-      ctx.lineWidth = 1;
       ctx.fillRect(i * tabWidth, 0, tabWidth, tocCanvas.height);
       ctx.strokeRect(i * tabWidth, 0, tabWidth, tocCanvas.height);
       ctx.fillStyle = '#222';
@@ -241,27 +310,17 @@
 
   function renderTocList() {
     tocButtons.innerHTML = '';
-    if (tocMode === 'page') {
-      tocItems.page.forEach(item => {
-        const btn = document.createElement('button');
-        btn.textContent = item.title;
-        btn.addEventListener('click', () => {
-          updatePage(item.page);
-          toggleToc(false);
-        });
-        tocButtons.appendChild(btn);
-      });
-    } else {
-      tocItems[tocMode].forEach(item => {
-        const btn = document.createElement('button');
-        btn.textContent = item.title;
-        btn.addEventListener('click', () => {
-          openIframe(item.url);
-          toggleToc(false);
-        });
-        tocButtons.appendChild(btn);
-      });
-    }
+    const items = tocItems[tocMode];
+    items.forEach(item => {
+      const btn = document.createElement('button');
+      btn.textContent = item.title;
+      btn.onclick = () => {
+        if (item.page) updatePage(item.page);
+        if (item.url) openIframe(item.url);
+        toggleToc(false);
+      };
+      tocButtons.appendChild(btn);
+    });
   }
 
   function toggleToc(show = !tocVisible) {
@@ -277,13 +336,13 @@
     }
   }
 
-  tocCanvas.addEventListener('click', e => {
+  tocCanvas.onclick = e => {
     const tabWidth = tocCanvas.width / tabs.length;
     const idx = Math.floor(e.offsetX / tabWidth);
     tocMode = ['page','content','video'][idx];
     drawTabs();
     renderTocList();
-  });
+  };
 
   document.getElementById('tocBtnLeft').onclick = () => {
     tocPosition = 'left';
@@ -301,7 +360,62 @@
 
   iframeCloseBtn.onclick = () => closeIframe();
 
+  function toggleFlyout(side) {
+    const flyout = document.getElementById(side === 'left' ? 'flyoutLeft' : 'flyoutRight');
+    flyout.style.display = flyout.style.display === 'flex' ? 'none' : 'flex';
+  }
+  document.getElementById('moreLeft').onclick = () => toggleFlyout('left');
+  document.getElementById('moreRight').onclick = () => toggleFlyout('right');
+
+  document.getElementById('zoomInBtn').onclick = zoomIn;
+  document.getElementById('zoomInBtn2').onclick = zoomIn;
+  document.getElementById('zoomOutBtn').onclick = zoomOut;
+  document.getElementById('zoomOutBtn2').onclick = zoomOut;
+  document.getElementById('zoomResetBtn').onclick = zoomReset;
+  document.getElementById('zoomResetBtn2').onclick = zoomReset;
+  document.getElementById('clickToggleBtn').onclick = toggleClickHighlight;
+  document.getElementById('clickToggleBtn2').onclick = toggleClickHighlight;
+
+  pageImage.addEventListener('mousedown', e => {
+    if (currentZoom <= 1) return;
+    isDragging = true;
+    startX = e.clientX - offsetX;
+    startY = e.clientY - offsetY;
+    pageImage.style.cursor = 'grabbing';
+  });
+  window.addEventListener('mouseup', () => {
+    isDragging = false;
+    pageImage.style.cursor = currentZoom > 1 ? 'grab' : 'default';
+  });
+  window.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    offsetX = e.clientX - startX;
+    offsetY = e.clientY - startY;
+    applyZoom();
+  });
+
+  pageImage.addEventListener('touchstart', e => {
+    if (currentZoom <= 1) return;
+    const touch = e.touches[0];
+    isDragging = true;
+    startX = touch.clientX - offsetX;
+    startY = touch.clientY - offsetY;
+  });
+  window.addEventListener('touchend', () => { isDragging = false; });
+  window.addEventListener('touchmove', e => {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    offsetX = touch.clientX - startX;
+    offsetY = touch.clientY - startY;
+    applyZoom();
+  });
+
   updatePage(currentPage);
+
+  window.addEventListener('load', () => {
+    const params = new URLSearchParams(window.location.search);
+    clickHighlight = params.get('click-area') === 'true';
+  });
 </script>
 
 </body>
