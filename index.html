@@ -394,6 +394,30 @@
     applyZoom();
   });
 
+  // リサイズ処理
+  function resizeContainer() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const baseWidth = 1920;
+    const baseHeight = 1080;
+    const aspectRatio = baseWidth / baseHeight;
+
+    let scaleFactor;
+    if (vw / vh > aspectRatio) {
+      scaleFactor = vh / baseHeight;
+    } else {
+      scaleFactor = vw / baseWidth;
+    }
+
+    const parent = document.getElementById('parentContainer');
+    parent.style.transform = `translate(-50%, -50%) scale(${scaleFactor})`;
+  }
+  window.addEventListener('resize', resizeContainer);
+  window.addEventListener('load', () => {
+    loadSidebarPosition();
+    resizeContainer();
+  });
+
   pageImage.addEventListener('touchstart', e => {
     if (currentZoom <= 1) return;
     const touch = e.touches[0];
